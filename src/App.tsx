@@ -29,9 +29,9 @@ function App() {
   }
 
   return (
-    <div className="dark:bg-slate-700 h-full flex flex-col justify-center">
+    <div className="bg-white dark:bg-slate-700 transition-colors h-full flex flex-col justify-center">
       <div className="grid justify-center gap-2">
-        <Label className="bg-slate-300 dark:bg-slate-500 m-2 rounded-sm flex items-center p-2 gap-2 cursor-pointer">
+        <Label className="bg-slate-300 dark:bg-slate-500 transition-colors m-2 rounded-sm flex items-center p-2 gap-2 cursor-pointer">
           <Checkbox onCheckedChange={toggleTheme} />
           Theme: {theme}
         </Label>

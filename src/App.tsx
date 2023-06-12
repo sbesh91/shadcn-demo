@@ -71,7 +71,13 @@ function App() {
 
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="secondary">Edit Profile</Button>
+            <Button
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.1 }}
+              variant="secondary"
+            >
+              Edit Profile
+            </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>

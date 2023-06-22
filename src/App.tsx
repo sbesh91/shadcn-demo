@@ -64,14 +64,32 @@ function App() {
   return (
     <div className="bg-white dark:bg-slate-700 transition-colors h-full flex flex-col justify-center">
       <div className="grid justify-center gap-2">
-        <Label className="bg-slate-300 dark:bg-slate-500 transition-colors m-2 rounded-sm flex items-center p-2 gap-2 cursor-pointer">
+        <Label layout className="bg-slate-300 hover:bg-emerald-200 dark:bg-slate-500 dark:hover:outline-emerald-300 dark:hover:outline transition m-2 rounded-sm flex items-center p-2 gap-2 cursor-pointer">
           <Checkbox onCheckedChange={toggleTheme} />
-          Theme: {theme}
+          <span>
+            Theme: {theme}
+          </span>
         </Label>
 
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant="secondary">Edit Profile</Button>
+            <Button
+              initial={{
+                scale: 1,
+                boxShadow: 'none'
+              }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: '0 1px 3px hsl(var(--foreground) / 0.1), 0 1px 2px hsl(var(--foreground) / 0.2)',
+              }}
+              transition={{
+                type: 'spring'
+              }}
+              variant="secondary"
+              className="dark:hover:bg-cyan-400 hover:bg-amber-300 transition-colors dark:hover:text-black"
+            >
+              Edit Profile
+            </Button>
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>

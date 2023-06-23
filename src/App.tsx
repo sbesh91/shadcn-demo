@@ -1,4 +1,4 @@
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, AccessibilityIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "~/ui/button";
 import { Checkbox } from "~/ui/checkbox";
@@ -22,6 +22,12 @@ import { Input } from "~/ui/input";
 import { Label } from "~/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "~/ui/popover";
 import { cn } from "./lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/ui/tooltip";
 
 const frameworks = [
   {
@@ -64,26 +70,45 @@ function App() {
   return (
     <div className="bg-white dark:bg-slate-700 transition-colors h-full flex flex-col justify-center">
       <div className="grid justify-center gap-2">
-        <Label layout className="bg-slate-300 hover:bg-emerald-200 dark:bg-slate-500 dark:hover:outline-emerald-300 dark:hover:outline transition m-2 rounded-sm flex items-center p-2 gap-2 cursor-pointer">
-          <Checkbox onCheckedChange={toggleTheme} />
-          <span>
-            Theme: {theme}
-          </span>
-        </Label>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button size="icon" variant="outline">
+              <AccessibilityIcon />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent side="left" className="w-auto">
+            Hello World
+          </PopoverContent>
+        </Popover>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Label
+                layout
+                className="bg-slate-300 hover:bg-emerald-200 dark:bg-slate-500 dark:hover:outline-emerald-300 dark:hover:outline transition m-2 rounded-sm flex items-center p-2 gap-2 cursor-pointer"
+              >
+                <Checkbox onCheckedChange={toggleTheme} />
+                <span>Theme: {theme}</span>
+              </Label>
+            </TooltipTrigger>
+            <TooltipContent>Hello World</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
 
         <Dialog>
           <DialogTrigger asChild>
             <Button
               initial={{
                 scale: 1,
-                boxShadow: 'none'
+                boxShadow: "none",
               }}
               whileHover={{
                 scale: 1.05,
-                boxShadow: '0 1px 3px hsl(var(--foreground) / 0.1), 0 1px 2px hsl(var(--foreground) / 0.2)',
+                boxShadow:
+                  "0 1px 3px hsl(var(--foreground) / 0.1), 0 1px 2px hsl(var(--foreground) / 0.2)",
               }}
               transition={{
-                type: 'spring'
+                type: "spring",
               }}
               variant="secondary"
               className="dark:hover:bg-cyan-400 hover:bg-amber-300 transition-colors dark:hover:text-black"

@@ -1,3 +1,4 @@
+import { proxyMap } from "valtio/utils";
 import { proxy } from "valtio";
 
 type Framework = {
@@ -6,6 +7,7 @@ type Framework = {
 };
 
 type User = {
+  id: number;
   name: string;
   username: string;
   framework: string;
@@ -19,6 +21,7 @@ type Theme = {
 type RootState = {
   frameworks: Framework[];
   user: User;
+  users: Map<number, User>;
   theme: Theme;
 };
 
@@ -46,6 +49,7 @@ const frameworks = [
 ];
 
 const user = {
+  id: 1,
   name: "Pedro",
   username: "@pedro",
   framework: frameworks[0].value,
@@ -56,8 +60,11 @@ const theme = {
   value: "dark",
 };
 
+const users = proxyMap<number, User>([[1, user]]);
+
 export const store = proxy<RootState>({
   frameworks,
   user,
   theme,
+  users,
 });

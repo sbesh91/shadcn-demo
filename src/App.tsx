@@ -13,6 +13,7 @@ import { Modal } from "./modal";
 import { useSnapshot } from "valtio";
 import { watch } from "valtio/utils";
 import { store } from "./state";
+import { Users } from "./users";
 
 watch((get) => {
   get(store.theme);
@@ -22,6 +23,7 @@ watch((get) => {
 
 function App() {
   const theme = useSnapshot(store.theme);
+
   function toggleTheme() {
     if (store.theme.value === "light") {
       store.theme.label = "Dark";
@@ -60,6 +62,7 @@ function App() {
           </Tooltip>
         </TooltipProvider>
         <Modal />
+        <Users />
       </div>
     </div>
   );

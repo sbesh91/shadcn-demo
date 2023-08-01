@@ -11,9 +11,15 @@ type User = {
   framework: string;
 };
 
+type Theme = {
+  label: string;
+  value: string;
+};
+
 type RootState = {
   frameworks: Framework[];
   user: User;
+  theme: Theme;
 };
 
 const frameworks = [
@@ -45,7 +51,13 @@ const user = {
   framework: frameworks[0].value,
 };
 
+const theme = {
+  label: "Dark",
+  value: "dark",
+};
+
 export const store = proxy<RootState>({
   frameworks,
   user,
+  theme,
 });

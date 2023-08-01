@@ -11,9 +11,11 @@ import {
 import { Input } from "~/ui/input";
 import { Label } from "~/ui/label";
 import { Combobox } from "./combobox";
+import { useSnapshot } from "valtio";
+import { store } from "./state";
 
 export function Modal() {
-  console.log("render modal");
+  const user = useSnapshot(store.user);
 
   return (
     <Dialog>
@@ -51,8 +53,11 @@ export function Modal() {
             </Label>
             <Input
               id="name"
-              defaultValue="Pedro Duarte"
+              defaultValue={user.name}
               className="col-span-3"
+              onInput={(event) => {
+                store.user.name = event.currentTarget.value;
+              }}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -61,8 +66,11 @@ export function Modal() {
             </Label>
             <Input
               id="username"
-              defaultValue="@peduarte"
+              defaultValue={user.username}
               className="col-span-3"
+              onInput={(event) => {
+                store.user.name = event.currentTarget.value;
+              }}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">

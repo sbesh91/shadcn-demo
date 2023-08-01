@@ -14,10 +14,9 @@ import {
 } from "~/ui/command";
 
 export function Combobox() {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(store.user.framework);
   const frameworks = useSnapshot(store.frameworks);
-  console.log("render combobox");
+  const user = useSnapshot(store.user);
+  const [open, setOpen] = useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -26,15 +25,17 @@ export function Combobox() {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-full justify-between"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+          {user.framework
+            ? frameworks.find(
+                (framework) => framework.value === store.user.framework
+              )?.label
             : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent align="start" className="w-max p-0">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandEmpty>No framework found.</CommandEmpty>
@@ -44,7 +45,6 @@ export function Combobox() {
                 className="cursor-pointer"
                 key={framework.value}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
                   setOpen(false);
                   store.user.framework = currentValue;
                 }}
@@ -52,7 +52,9 @@ export function Combobox() {
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === framework.value ? "opacity-100" : "opacity-0"
+                    store.user.framework === framework.value
+                      ? "opacity-100"
+                      : "opacity-0"
                   )}
                 />
                 {framework.label}

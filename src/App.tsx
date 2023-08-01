@@ -1,5 +1,4 @@
 import { AccessibilityIcon } from "lucide-react";
-import { useState } from "react";
 import { Button } from "~/ui/button";
 import { Checkbox } from "~/ui/checkbox";
 import { Label } from "~/ui/label";
@@ -11,20 +10,26 @@ import {
   TooltipTrigger,
 } from "~/ui/tooltip";
 import { Modal } from "./modal";
+import { useSnapshot } from "valtio";
+import { watch } from "valtio/utils";
+import { store } from "./state";
+
+watch((get) => {
+  get(store.theme);
+
+  document.body.className = store.theme.value;
+});
 
 function App() {
-  const [theme, setTheme] = useState("light");
-
+  const theme = useSnapshot(store.theme);
   function toggleTheme() {
-    setTheme((prev) => {
-      if (prev === "light") {
-        document.body.className = "dark";
-        return "dark";
-      }
-
-      document.body.className = "light";
-      return "light";
-    });
+    if (store.theme.value === "light") {
+      store.theme.label = "Dark";
+      store.theme.value = "dark";
+      return;
+    }
+    store.theme.label = "Light";
+    store.theme.value = "light";
   }
 
   return (
@@ -48,7 +53,7 @@ function App() {
                 className="bg-slate-300 hover:bg-emerald-200 dark:bg-slate-500 dark:hover:outline-emerald-300 dark:hover:outline transition m-2 rounded-sm flex items-center p-2 gap-2 cursor-pointer"
               >
                 <Checkbox onCheckedChange={toggleTheme} />
-                <span>Theme: {theme}</span>
+                <span>Theme: {theme.label}</span>
               </Label>
             </TooltipTrigger>
             <TooltipContent>Hello World</TooltipContent>

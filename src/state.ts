@@ -1,19 +1,19 @@
 import { proxyMap } from "valtio/utils";
-import { proxy } from "valtio";
+import { proxy, useSnapshot } from "valtio";
 
-type Framework = {
+export type Framework = {
   label: string;
   value: string;
 };
 
-type User = {
+export type User = {
   id: number;
   name: string;
   username: string;
   framework: string;
 };
 
-type Theme = {
+export type Theme = {
   label: string;
   value: string;
 };
@@ -23,6 +23,7 @@ type RootState = {
   user: User;
   users: Map<number, User>;
   theme: Theme;
+  void: object;
 };
 
 const frameworks = [
@@ -67,4 +68,16 @@ export const store = proxy<RootState>({
   user,
   theme,
   users,
+  void: {},
 });
+
+export function useMapKey<K, V>(map: Map<K, V>, key: K) {
+  const value = map.get(key);
+  const snap = useSnapshot(value ? value : store.void);
+
+  if (Object.keys(snap).length === 0) {
+    return null;
+  }
+
+  return snap as V;
+}

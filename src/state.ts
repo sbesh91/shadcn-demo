@@ -72,6 +72,7 @@ export const store = proxy<RootState>({
 });
 
 export function useMapKey<K, V>(map: Map<K, V>, key: K) {
+  useSnapshot(map);
   const value = map.get(key);
   const snap = useSnapshot(value ? value : store.void);
 

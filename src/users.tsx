@@ -1,7 +1,7 @@
 import { useSnapshot } from "valtio";
-import { store, useMapKey } from "./state";
+import { store } from "./state";
 import { Button } from "~/ui/button";
-import { useEffect } from "react";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 
 function add() {
   const nextId = store.users.size + 1;
@@ -27,26 +27,31 @@ export function Users() {
   const list = Array.from(users.values());
 
   return (
-    <div>
-      <SingleUser />
-      <div className="flex gap-2 mb-2">
+    <motion.div layout className="flex flex-col gap-2">
+      <motion.div layout className="flex gap-2">
         <Button onClick={add}>Add</Button>
         <Button onClick={update}>Update</Button>
-      </div>
-      {list.map((user) => (
-        <div key={user.id}>{user.name}</div>
-      ))}
-    </div>
+      </motion.div>
+      <LayoutGroup>
+        <AnimatePresence mode="popLayout">
+          {list.map((user) => (
+            <motion.div
+              key={user.id}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              layout
+            >
+              <motion.span
+                layout
+                className="inline-block border-red-500 border-2 p-1"
+              >
+                {user.name}
+              </motion.span>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </LayoutGroup>
+    </motion.div>
   );
-}
-
-function SingleUser() {
-  // const u = useMapKey(store.users, 1);
-  const u2 = useMapKey(store.users, 3);
-
-  useEffect(() => {
-    // console.log(u?.name);
-    console.log(u2?.name);
-  }, [u2?.name]);
-  return null;
 }

@@ -12,8 +12,9 @@ import {
 import { Modal } from "./modal";
 import { useSnapshot } from "valtio";
 import { watch } from "valtio/utils";
-import { store } from "./state";
+import { store, useMapKey } from "./state";
 import { Users } from "./users";
+import { useEffect } from "react";
 
 watch((get) => {
   get(store.theme);
@@ -62,10 +63,22 @@ function App() {
           </Tooltip>
         </TooltipProvider>
         <Modal />
+        <User />
         <Users />
       </div>
     </div>
   );
+}
+
+function User() {
+  // const u = useMapKey(store.users, 1);
+  const u2 = useMapKey(store.users, 3);
+
+  useEffect(() => {
+    // console.log(u?.name);
+    console.log(u2?.name);
+  }, [u2?.name]);
+  return null;
 }
 
 export default App;
